@@ -1,18 +1,25 @@
-- name: Checkout repository
-  uses: actions/checkout@v4
-  with:
-    repository: craftcms/cms
-    ref: 5.x
+name: Generate craftcms-v5
+on:
+  workflow_dispatch:
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          repository: craftcms/cms
+          ref: 5.x
 
-- name: Pack repository with Repomix
-  uses: yamadashy/repomix/.github/actions/repomix@main
-  with:
-    output: craftcms-v5.xml
+      - name: Pack repository with Repomix
+        uses: yamadashy/repomix/.github/actions/repomix@main
+        with:
+          output: craftcms-v5.xml
 
-- name: Commit file
-  run: |
-    git config --local user.email "actions@github.com"
-    git config --local user.name "GitHub Actions"
-    git add craftcms-v5.xml
-    git commit -m "Update craftcms-v5.xml"
-    git push
+      - name: Commit file
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add craftcms-v5.xml
+          git commit -m "Update craftcms-v5.xml"
+          git push
