@@ -5,15 +5,20 @@ jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout current repository
+        uses: actions/checkout@v4
+
+      - name: Checkout craftcms/cms repository
         uses: actions/checkout@v4
         with:
           repository: craftcms/cms
           ref: 5.x
+          path: source
 
       - name: Pack repository with Repomix
         uses: yamadashy/repomix/.github/actions/repomix@main
         with:
+          input: source
           output: craftcms-v5.xml
 
       - name: Commit file
