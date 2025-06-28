@@ -15,11 +15,16 @@ jobs:
           ref: 5.x
           path: source
 
-      - name: Pack repository with Repomix
-        uses: yamadashy/repomix/.github/actions/repomix@main
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          directories: source
-          output: craftcms-v5.xml
+          node-version: '20'
+
+      - name: Install Repomix
+        run: npm install -g repomix
+
+      - name: Pack repository with Repomix
+        run: repomix source --output craftcms-v5.xml
 
       - name: Commit file
         run: |
