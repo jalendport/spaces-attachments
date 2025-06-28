@@ -1,6 +1,10 @@
 name: Generate craftcms-v5
 on:
   workflow_dispatch:
+
+permissions:
+  contents: write
+
 jobs:
   generate:
     runs-on: ubuntu-latest
