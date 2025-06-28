@@ -18,7 +18,7 @@ jobs:
       - name: Pack repository with Repomix
         uses: yamadashy/repomix/.github/actions/repomix@main
         with:
-          input: source
+          directories: source
           output: craftcms-v5.xml
 
       - name: Commit file
