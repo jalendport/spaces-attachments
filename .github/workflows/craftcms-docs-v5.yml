@@ -1,0 +1,39 @@
+name: Generate craftcms-docs-v5
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current repository
+        uses: actions/checkout@v4
+
+      - name: Checkout craftcms/cms repository
+        uses: actions/checkout@v4
+        with:
+          repository: craftcms/docs
+          ref: main
+          path: source
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Repomix
+        run: npm install -g repomix
+
+      - name: Pack repository with Repomix
+        run: repomix source/docs/5.x --output craftcms-v5.xml
+
+      - name: Commit file
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add craftcms-v5.xml
+          git commit -m "Update craftcms-docs-v5.xml"
+          git push
